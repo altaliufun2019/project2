@@ -3,8 +3,11 @@ package com.example.project2.Managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.example.project2.MainActivity;
+import com.example.project2.MessageCenter.DispatchQueue;
 
 import java.net.InetAddress;
 import java.sql.Time;
@@ -18,9 +21,13 @@ public class MessageController {
     public static MessageController getInstance() {
         return ourInstance;
     }
-
     private MessageController() {
+    }
 
+    public void getPosts() {
+        if (isInternetAvailable()) {
+            ConnectionManager.getInstance().getPosts();
+        }
     }
 
 
@@ -33,6 +40,17 @@ public class MessageController {
             return false;
         }
     }
+
+
+
+    void onEnd(){
+
+    }
+
+
+
+
+
 
     private void updateLastUpdate(int postId) {
         Context context = MainActivity.getContext();
