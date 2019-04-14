@@ -8,11 +8,12 @@ import android.provider.BaseColumns
 class CommentReaderHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, 
         null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        db?.execSQL(COMMENT_CREATE_ENTRIES)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        db?.execSQL(COMMENT_DELETE_ENTRIES)
+        onCreate(db)
     }
     
     companion object{
