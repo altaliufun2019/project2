@@ -1,3 +1,5 @@
+package com.example.project2;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         applicationContext = getApplicationContext();
     }
 
-    public Context getContext(){
+    public static Context getContext(){
         return applicationContext;
     }
 }
