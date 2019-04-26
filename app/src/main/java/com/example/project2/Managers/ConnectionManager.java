@@ -16,7 +16,6 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.project2.MainActivity;
 import com.example.project2.MessageCenter.DispatchQueue;
-import com.example.project2.MessageCenter.NotificationCenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +42,7 @@ public class ConnectionManager {
     }
 
     public void getPosts() {
+        final List<Post> posts = new ArrayList<>(100);
         requestQueue.add(new JsonArrayRequest(postAddress, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

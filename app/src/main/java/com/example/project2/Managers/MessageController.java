@@ -69,7 +69,12 @@ public class MessageController {
     }
 
     private Boolean isRecentlyUpdated(int postId) {
-        return timeFromLastUpdate(postId) <= recentlyTime;
+        int lastTime = timeFromLastUpdate(postId);
+        if (lastTime == 0)
+            return false;
+        return lastTime <= recentlyTime;
     }
+
+
 
 }
