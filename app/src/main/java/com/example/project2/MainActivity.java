@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
 
         this.monitor = new ConnectionMonitor();
 
-        MessageController.getInstance().getPosts(monitor.getConnection());
-        MessageController.getInstance().getComments(MessageController.posts.get(2).getId(), monitor.getConnection());
+        MessageController.getInstance().getPosts();
     }
 
     @Override
