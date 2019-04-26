@@ -16,6 +16,8 @@ object StorageManager {
                         post.title, post.body)
                 postDb.save()
             }
+            val posts =  Select.from(PostDb::class.java).list()
+            posts;
         })
     }
 
@@ -34,7 +36,9 @@ object StorageManager {
 
     fun load(postId: Int) {
         mQueue.post(Runnable {
+            val cmnts = mutableListOf<Comment>()
             val comments = Select.from(CommentDb::class.java).where(Condition.prop("postId").eq(postId)).list()
+            comments.forEach { it -> cmnts.add(Comment(it.postId, it.getID(), it.name, it.email, it.body)) }
             (Handler()).post({
 
             })
@@ -43,7 +47,9 @@ object StorageManager {
 
     fun load_posts() {
         mQueue.post(Runnable {
+            val psts = mutableListOf<Post>()
             val posts = PostDb.listAll(PostDb::class.java)
+            posts.forEach { it -> psts.add(Post(it.userid, it.id, it.title, it.body)) }
             (Handler()).post({
 
             })

@@ -3,10 +3,10 @@ package com.example.project2.Database;
 import com.orm.SugarRecord;
 
 public class PostDb extends SugarRecord<PostDb> {
-    int userid;
-    int id;
-    String title;
-    String body;
+    public int userid;
+    public int id;
+    public String title;
+    public String body;
 
     public PostDb() {
     }
