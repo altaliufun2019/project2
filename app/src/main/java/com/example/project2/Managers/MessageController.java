@@ -2,58 +2,49 @@ package com.example.project2.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.os.Handler;
-import android.os.Looper;
 
 import com.example.project2.MainActivity;
-import com.example.project2.MessageCenter.DispatchQueue;
 
 import java.net.InetAddress;
-import java.sql.Time;
-
-import static android.support.v4.content.ContextCompat.getSystemService;
+import java.util.List;
 
 public class MessageController {
     private static final MessageController ourInstance = new MessageController();
-    private static int recentlyTime = 5 * 60;
+    private static final int recentlyTime = 5 * 60;
+    static final int POSTS = -1;
 
     public static MessageController getInstance() {
         return ourInstance;
     }
 
-    private MessageController() {
-    }
+    private MessageController() {}
 
     public void getPosts() {
-        if (isInternetAvailable()) {
-            ConnectionManager.getInstance().getPosts();
+        if (isInternetNotAvailable() || isRecentlyUpdated(POSTS)) {
+            StorageManager.INSTANCE.load_posts();
+        } else {
+            List<Post> posts = ConnectionManager.getInstance().getPosts();
+            StorageManager.INSTANCE.save(posts);
         }
     }
 
+    public void getComments(int id) {
+        if (isInternetNotAvailable() || isRecentlyUpdated(id)){
+            StorageManager.INSTANCE.load(id);
+        }
+        else{
+            StorageManager.INSTANCE.save(ConnectionManager.getInstance().getComments(id), id);
+        }
+    }
 
-    public boolean isInternetAvailable() {
+    private boolean isInternetNotAvailable() {
         try {
-            InetAddress ipAddr = InetAddress.getByName("google.com");
-            return !ipAddr.equals("");
+            InetAddress ipAddress = InetAddress.getByName("google.com");
+            return ipAddress.equals("");
 
         } catch (Exception e) {
-            return false;
+            return true;
         }
-    }
-
-
-    void onEnd() {
-
-    }
-
-
-    private void updateLastUpdate(int postId) {
-        Context context = MainActivity.getContext();
-        SharedPreferences preferences = context.getSharedPreferences("LastCheck", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong(String.valueOf(postId), System.currentTimeMillis());
-        editor.apply();
     }
 
     private int timeFromLastUpdate(int postId) {
@@ -71,6 +62,5 @@ public class MessageController {
     private Boolean isRecentlyUpdated(int postId) {
         return timeFromLastUpdate(postId) <= recentlyTime;
     }
-
 
 }
