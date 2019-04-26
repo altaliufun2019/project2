@@ -16,6 +16,14 @@ import com.example.project2.R
 class ActionPane : Fragment(), AdapterView.OnItemSelectedListener {
     private val listFragment = ListFragment()
     private val gridFragment = GridFragment()
+    private val options = Array<String>(2) { "" }
+
+    init {
+        options[0] = "List"
+        options[1] = "Grid"
+
+    }
+
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -47,9 +55,6 @@ class ActionPane : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.action_pane, container, false)
         val spinner = view.findViewById<Spinner>(R.id.btn3)
-        val options = Array<String>(2) { "" }
-        options[0] = "List"
-        options[1] = "Grid"
 
         val arrayAdapter = ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, options)
         spinner.onItemSelectedListener = this
