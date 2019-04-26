@@ -42,11 +42,12 @@ public class ConnectionManager {
         requestQueue.start();
     }
 
-    public List<Post> getPosts() {
-        final List<Post> posts = new ArrayList<>(100);
+    public void getPosts() {
         requestQueue.add(new JsonArrayRequest(postAddress, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                final List<Post> posts = new ArrayList<>(100);
+                System.out.println(response);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject json = response.getJSONObject(i);
@@ -57,19 +58,24 @@ public class ConnectionManager {
                         Log.e("json parsing", "post out of range");
                     }
                 }
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        StorageManager.INSTANCE.save(posts);
+                    }
+                });
 
             }
         }, null));
         updateLastUpdate(MessageController.POSTS);
-        return posts;
     }
 
-    List<Comment> getComments(int id) {
-        final List<Comment> comments = new ArrayList<>(5);
+    void getComments(final int id) {
         requestQueue.add(new JsonArrayRequest(commentAddress + String.valueOf(id),
                 new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                final List<Comment> comments = new ArrayList<>(5);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject json = response.getJSONObject(i);
@@ -81,11 +87,15 @@ public class ConnectionManager {
                         Log.e("json parsing", "comment out of range");
                     }
                 }
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        StorageManager.INSTANCE.save(comments, id);
+                    }
+                });
             }
         }, null));
-        NotificationCenter.INSTANCE.register(new Handler(), id);
         updateLastUpdate(id);
-        return comments;
     }
 
     private void updateLastUpdate(int postId) {

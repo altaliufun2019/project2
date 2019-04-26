@@ -15,6 +15,8 @@ public class Comment {
         this.body = body;
     }
 
+
+
     public int getPostid() {
         return postid;
     }

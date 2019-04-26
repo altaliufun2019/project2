@@ -7,8 +7,6 @@ import android.net.NetworkInfo;
 
 import com.example.project2.MainActivity;
 
-import java.net.InetAddress;
-import java.util.List;
 
 public class MessageController {
     private static final MessageController ourInstance = new MessageController();
@@ -25,8 +23,7 @@ public class MessageController {
         if (isInternetAvailable() || isRecentlyUpdated(POSTS)) {
             StorageManager.INSTANCE.load_posts();
         } else {
-            List<Post> posts = ConnectionManager.getInstance().getPosts();
-            StorageManager.INSTANCE.save(posts);
+            ConnectionManager.getInstance().getPosts();
         }
     }
 
@@ -35,7 +32,7 @@ public class MessageController {
             StorageManager.INSTANCE.load(id);
         }
         else{
-            StorageManager.INSTANCE.save(ConnectionManager.getInstance().getComments(id), id);
+            ConnectionManager.getInstance().getComments(id);
         }
     }
 
