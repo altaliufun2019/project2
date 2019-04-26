@@ -20,7 +20,7 @@ public class MessageController {
     private MessageController() {}
 
     public void getPosts() {
-        if (isInternetAvailable() || isRecentlyUpdated(POSTS)) {
+        if (!isInternetAvailable()) {
             StorageManager.INSTANCE.load_posts();
         } else {
             ConnectionManager.getInstance().getPosts();
@@ -28,7 +28,7 @@ public class MessageController {
     }
 
     public void getComments(int id) {
-        if (isInternetAvailable() || isRecentlyUpdated(id)){
+        if (!isInternetAvailable() || isRecentlyUpdated(id)){
             StorageManager.INSTANCE.load(id);
         }
         else{
