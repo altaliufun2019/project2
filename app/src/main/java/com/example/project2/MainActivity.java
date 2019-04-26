@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         applicationContext = getApplicationContext();
+        setContentView(R.layout.activity_main);
     }
 
     public static Context getContext(){

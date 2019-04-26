@@ -21,6 +21,7 @@ public class MessageController {
     public static MessageController getInstance() {
         return ourInstance;
     }
+
     private MessageController() {
     }
 
@@ -42,14 +43,9 @@ public class MessageController {
     }
 
 
-
-    void onEnd(){
+    void onEnd() {
 
     }
-
-
-
-
 
 
     private void updateLastUpdate(int postId) {
