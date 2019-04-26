@@ -1,4 +1,4 @@
-package com.example.test.fragments
+package com.example.project2.UIClasses.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
