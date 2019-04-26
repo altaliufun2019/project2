@@ -5,9 +5,10 @@ import com.example.project2.Constants.Constants
 import java.util.ArrayList
 
 
-class NotificationCenter private constructor() {
+object NotificationCenter{
     private val observers = SparseArray<MutableList<Any>>()
     private val allowedTasks = mutableListOf<Int>()
+    val DATA_LOADING = Constants.Tasks.FETCH_DATA
 
     init {
         allowedTasks.add(Constants.Tasks.FETCH_DATA)
@@ -54,8 +55,4 @@ class NotificationCenter private constructor() {
         return true
     }
 
-    companion object {
-        val instance = NotificationCenter()
-        val DATA_LOADING = Constants.Tasks.FETCH_DATA
-    }
 }
