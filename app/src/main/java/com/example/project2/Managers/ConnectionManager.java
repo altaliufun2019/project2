@@ -16,6 +16,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.project2.MainActivity;
 import com.example.project2.MessageCenter.DispatchQueue;
+import com.example.project2.MessageCenter.NotificationCenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,6 +83,7 @@ public class ConnectionManager {
                 }
             }
         }, null));
+        NotificationCenter.INSTANCE.register(new Handler(), id);
         updateLastUpdate(id);
         return comments;
     }

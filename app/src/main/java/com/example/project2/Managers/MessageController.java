@@ -2,6 +2,8 @@ package com.example.project2.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.example.project2.MainActivity;
 
@@ -20,7 +22,7 @@ public class MessageController {
     private MessageController() {}
 
     public void getPosts() {
-        if (isInternetNotAvailable() || isRecentlyUpdated(POSTS)) {
+        if (isInternetAvailable() || isRecentlyUpdated(POSTS)) {
             StorageManager.INSTANCE.load_posts();
         } else {
             List<Post> posts = ConnectionManager.getInstance().getPosts();
@@ -29,7 +31,7 @@ public class MessageController {
     }
 
     public void getComments(int id) {
-        if (isInternetNotAvailable() || isRecentlyUpdated(id)){
+        if (isInternetAvailable() || isRecentlyUpdated(id)){
             StorageManager.INSTANCE.load(id);
         }
         else{
@@ -37,14 +39,24 @@ public class MessageController {
         }
     }
 
-    private boolean isInternetNotAvailable() {
-        try {
-            InetAddress ipAddress = InetAddress.getByName("google.com");
-            return ipAddress.equals("");
-
-        } catch (Exception e) {
-            return true;
+    private boolean isInternetAvailable() {
+        boolean status=false;
+        try{
+            ConnectivityManager cm = (ConnectivityManager) MainActivity.getContext().
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getNetworkInfo(0);
+            if (netInfo != null && netInfo.getState()==NetworkInfo.State.CONNECTED) {
+                status= true;
+            }else {
+                netInfo = cm.getNetworkInfo(1);
+                if(netInfo!=null && netInfo.getState()==NetworkInfo.State.CONNECTED)
+                    status= true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
+        return status;
     }
 
     private int timeFromLastUpdate(int postId) {
