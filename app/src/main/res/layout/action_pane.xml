@@ -7,27 +7,17 @@
 
     >
 
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="111"
-        tools:ignore="ButtonStyle" />
-
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="222"
-        tools:ignore="ButtonStyle" />
-
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="3"/>
+
+    <Spinner
         android:id="@+id/btn3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:spinnerMode="dropdown"
         android:text="333"
         tools:ignore="ButtonStyle" />
 

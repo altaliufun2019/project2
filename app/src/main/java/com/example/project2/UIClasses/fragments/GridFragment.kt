@@ -9,7 +9,7 @@ import android.widget.GridView
 import com.example.project2.R
 import com.example.project2.UIClasses.PostAdapter
 
-class ItemsFragment1 : Fragment() {
+class GridFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

@@ -7,43 +7,55 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import com.example.project2.R
-class ActionPane : Fragment() {
+
+class ActionPane : Fragment(), AdapterView.OnItemSelectedListener {
+    private val listFragment = ListFragment()
+    private val gridFragment = GridFragment()
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
 
-    val newFrg = ItemsFragment()
-    val newFrg1 = ItemsFragment1()
+        when (position) {
+            0 -> {
+//                (activity as AppCompatActivity).supportFragmentManager
+                fragmentManager!!.beginTransaction().replace(R.id.cont, listFragment).commit()
 
+            }
+            1 -> {
+                fragmentManager!!.beginTransaction().replace(R.id.cont, gridFragment).commit()
+
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        val transaction = (activity as AppCompatActivity).supportFragmentManager
-        Log.i("SSS", "SSS")
-        transaction.beginTransaction().add(R.id.cont, newFrg).commit()
+        fragmentManager!!.beginTransaction().add(R.id.cont, listFragment).commit()
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.action_pane, container, false)
-        view.findViewById<Button>(R.id.btn1).setOnClickListener {
+        val spinner = view.findViewById<Spinner>(R.id.btn3)
+        val options = Array<String>(2) { "" }
+        options[0] = "List"
+        options[1] = "Grid"
 
-            val fragmentManager = (activity as AppCompatActivity).supportFragmentManager
-            Log.i("SSS", "SSS")
-            fragmentManager.beginTransaction().replace(R.id.cont, newFrg).commit()
-
-
-        }
-        view.findViewById<Button>(R.id.btn2).setOnClickListener {
-
-            val fragmentManager = (activity as AppCompatActivity).supportFragmentManager
-            Log.i("SSssS", "SSssS")
-            fragmentManager.beginTransaction().replace(R.id.cont, newFrg1).commit()
+        val arrayAdapter = ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, options)
+        spinner.onItemSelectedListener = this
+        spinner.adapter = arrayAdapter
 
 
-        }
 
         return view
 
