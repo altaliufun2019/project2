@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
         super.onDestroy();
 //        this.monitor.disable();
         NotificationCenter.INSTANCE.unregister(this, Constants.Tasks.LOAD_POST);
+        NotificationCenter.INSTANCE.unregister(this, Constants.Tasks.LOAD_COMMENT);
     }
 
     // initializing and creating recycler view

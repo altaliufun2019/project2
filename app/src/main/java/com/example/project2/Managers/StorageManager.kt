@@ -72,9 +72,9 @@ object StorageManager {
             }catch(e: Exception){
                 println("could not load posts from database")
             }
-            (Handler()).post({
-
-            })
+            (Handler()).post {
+                NotificationCenter.posts_loaded(psts)
+            }
         })
     }
 }

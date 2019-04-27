@@ -37,13 +37,11 @@ public class CommentActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        this.monitor.disable();
     }
 
     // initializing and creating recycler view
     private void initializeRecyclerView(){
         rvData = findViewById(R.id.numList);
-
         CommentAdapter adapter = new CommentAdapter(MessageController.getInstance().comments);
         mAdapter = adapter;
         rvData.setAdapter(adapter);
