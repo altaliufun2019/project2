@@ -35,14 +35,14 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/ivtest"
+                    android:id="@+id/civtest"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"
                     android:contentDescription="connecting" />
             </FrameLayout>
             <TextView
-                android:id="@+id/connecting"
+                android:id="@+id/cconnecting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"

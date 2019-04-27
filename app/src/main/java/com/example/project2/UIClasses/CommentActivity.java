@@ -43,10 +43,9 @@ public class CommentActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        this.monitor = new MainActivity.ConnectionMonitor(this, (ImageView) findViewById(R.id.ivtest), (TextView) findViewById(R.id.connecting));
+        this.monitor = new MainActivity.ConnectionMonitor(this, (ImageView) findViewById(R.id.civtest), (TextView) findViewById(R.id.cconnecting));
 
         initializeRecyclerView();
-
 
         ((TextView)findViewById(R.id.comment_detail))
                 .setText("Post " + MessageController.getInstance().current_postID
