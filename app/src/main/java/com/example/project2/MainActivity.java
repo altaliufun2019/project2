@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
         this.monitor = new ConnectionMonitor();
 
         MessageController.getInstance().getPosts();
+        MessageController.getInstance().getComments(4);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
             if (network == null || !network.isConnected()){
 
             }
-//                Glide.with(context).load(R.drawable.loading).into((ImageView) findViewById(R.id.ivtest));
+//                Glide.with(context).load(R.drawable.loading).into((ImageView) findViewById(R.ID.ivtest));
         }
 
         void disable() {
@@ -101,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
 //                @Override
 //                public void run() {
 //                    isConnected = true;
-//                    ((ImageView) findViewById(R.id.ivtest)).setImageResource(0);
-//                    ((TextView) findViewById(R.id.connecting)).setText("");
+//                    ((ImageView) findViewById(R.ID.ivtest)).setImageResource(0);
+//                    ((TextView) findViewById(R.ID.connecting)).setText("");
 //                }
 //            });
         }
@@ -113,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
 //                @Override
 //                public void run() {
 //                    isConnected = false;
-//                    Glide.with(context).load(R.drawable.loading).into((ImageView) findViewById(R.id.ivtest));
-//                    ((TextView) findViewById(R.id.connecting)).setText(" connecting...");
+//                    Glide.with(context).load(R.drawable.loading).into((ImageView) findViewById(R.ID.ivtest));
+//                    ((TextView) findViewById(R.ID.connecting)).setText(" connecting...");
 //                }
 //            });
         }

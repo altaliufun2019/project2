@@ -4,7 +4,7 @@ import com.orm.SugarRecord;
 
 public class PostDb extends SugarRecord<PostDb> {
     public int userid;
-    public int id;
+    public int ID;
     public String title;
     public String body;
 
@@ -13,7 +13,7 @@ public class PostDb extends SugarRecord<PostDb> {
 
     public PostDb(int userid, int id, String title, String body) {
         this.userid = userid;
-        this.id = id;
+        this.ID = id;
         this.title = title;
         this.body = body;
     }

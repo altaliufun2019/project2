@@ -51,7 +51,7 @@ public class ConnectionManager {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject json = response.getJSONObject(i);
-                        posts.add(new Post(json.getInt("userId"), json.getInt("id"),
+                        posts.add(new Post(json.getInt("userId"), json.getInt("ID"),
                                 json.getString("title"), json.getString("body")));
 
                     } catch (JSONException e) {
@@ -79,7 +79,7 @@ public class ConnectionManager {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject json = response.getJSONObject(i);
-                        comments.add(new Comment(json.getInt("postId"), json.getInt("id"),
+                        comments.add(new Comment(json.getInt("postId"), json.getInt("ID"),
                                 json.getString("name"), json.getString("email"),
                                 json.getString("body")));
                     }

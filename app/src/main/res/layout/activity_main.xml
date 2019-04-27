@@ -18,7 +18,7 @@
     android:id="@+id/cont">
         <!--<fragment android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:name="com.example.test.fragments.ListFragment
-                  android:id="@+id/items">
+                  android:ID="@+ID/items">
         </fragment>
 -->
     </android.support.v7.widget.ActionBarContainer>
