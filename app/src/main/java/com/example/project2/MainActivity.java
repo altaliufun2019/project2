@@ -79,11 +79,8 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
 
     private void initializeSpinner(){
         Spinner spinner = (Spinner) findViewById(R.id.btn3);
-// Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, R.layout.support_simple_spinner_dropdown_item, options);
-// Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 

@@ -28,7 +28,7 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         applicationContext = getApplicationContext();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_comment);
 
         initializeRecyclerView();
 
@@ -41,7 +41,7 @@ public class CommentActivity extends AppCompatActivity {
 
     // initializing and creating recycler view
     private void initializeRecyclerView(){
-        rvData = findViewById(R.id.numList);
+        rvData = findViewById(R.id.comment_view);
         CommentAdapter adapter = new CommentAdapter(MessageController.getInstance().comments);
         mAdapter = adapter;
         rvData.setAdapter(adapter);
