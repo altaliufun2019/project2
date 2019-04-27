@@ -3,17 +3,32 @@ package com.example.project2;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.project2.Constants.Constants;
 import com.example.project2.Managers.Comment;
 import com.example.project2.Managers.MessageController;
@@ -34,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
     private DataNumberAdapter mAdapter;
     private RecyclerView rvData;
     private CharSequence[] options = {"list view", "gird view"};
-//    private ConnectionMonitor monitor;
+    private ConnectionMonitor monitor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,25 +59,42 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
         NotificationCenter.INSTANCE.register(this, Constants.Tasks.LOAD_POST);
         NotificationCenter.INSTANCE.register(this, Constants.Tasks.LOAD_COMMENT);
 
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
         // starting toolbar
-//        Toolbar toolbar = findViewById(R.id.main_toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         initializeRecyclerView();
         initializeSpinner();
 
-//        this.monitor = new ConnectionMonitor();
+        System.out.println(Thread.currentThread().getId());
+
+        this.monitor = new ConnectionMonitor(this, (ImageView) findViewById(R.id.ivtest), (TextView) findViewById(R.id.connecting));
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        this.monitor.disable();
+        this.monitor.disable();
         NotificationCenter.INSTANCE.unregister(this, Constants.Tasks.LOAD_POST);
         NotificationCenter.INSTANCE.unregister(this, Constants.Tasks.LOAD_COMMENT);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 
     // initializing and creating recycler view
@@ -119,68 +151,75 @@ public class MainActivity extends AppCompatActivity implements NotificationCente
 
     }
 
-//
-//    /**
-//     * a monitor class for network connectivity
-//     */
-//    private class ConnectionMonitor extends ConnectivityManager.NetworkCallback{
-//        final private NetworkRequest networkRequest;
-//        private Context context;
-//        private Boolean isConnected = false;
-//
-//        ConnectionMonitor() {
-//            networkRequest = new NetworkRequest.Builder()
-//                    .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-//                    .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-//                    .build();
-//            enable(MainActivity.this);
-//        }
-//
-//        Boolean getConnection() {
-//            return isConnected;
-//        }
-//
-//        void enable(Context context) {
-//            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            cm.registerNetworkCallback(networkRequest, this);
-//            this.context = context;
-//            NetworkInfo network = cm.getActiveNetworkInfo();
-//            if (network == null || !network.isConnected()){
-//
-//            }
-//                Glide.with(context).load(R.drawable.loading).into((ImageView) findViewById(R.id.ivtest));
-//        }
-//
-//        void disable() {
-//            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            cm.unregisterNetworkCallback(this);
-//            this.context = null;
-//        }
-//
-//        @Override
-//        public void onAvailable(Network network) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    isConnected = true;
-//                    ((ImageView) findViewById(R.id.ivtest)).setImageResource(0);
-//                    ((TextView) findViewById(R.id.connecting)).setText("");
-//                }
-//            });
-//        }
-//
-//        @Override
-//        public void onLost(Network network) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    isConnected = false;
-//                    Glide.with(context).load(R.drawable.loading).into((ImageView) findViewById(R.id.ivtest));
-//                    ((TextView) findViewById(R.id.connecting)).setText(" connecting...");
-//                }
-//            });
-//        }
-//    }
+
+    /**
+     * a monitor class for network connectivity
+     */
+    public static class ConnectionMonitor extends ConnectivityManager.NetworkCallback{
+        final private NetworkRequest networkRequest;
+        private Context context;
+        private Boolean isConnected = false;
+        private ImageView ivtest;
+        private TextView connecting;
+
+        public ConnectionMonitor(Context context, ImageView ivtest, TextView connecting) {
+            networkRequest = new NetworkRequest.Builder()
+                    .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                    .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    .build();
+            this.ivtest = ivtest;
+            this.connecting = connecting;
+            enable(context);
+        }
+
+        Boolean getConnection() {
+            return isConnected;
+        }
+
+        void enable(Context context) {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            cm.registerNetworkCallback(networkRequest, this);
+            this.context = context;
+            NetworkInfo network = cm.getActiveNetworkInfo();
+            if (network == null || !network.isConnected()){
+                Glide.with(context).load(R.drawable.loading).into(ivtest);
+            }
+        }
+
+        public void disable() {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            cm.unregisterNetworkCallback(this);
+            this.context = null;
+        }
+
+        @Override
+        public void onAvailable(Network network) {
+            (new Handler(Looper.getMainLooper())).post(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getId());
+
+                    isConnected = true;
+                    ivtest.setImageResource(0);
+                    connecting.setText("");
+                }
+            });
+        }
+
+        @Override
+        public void onLost(Network network) {
+            (new Handler(Looper.getMainLooper())).post(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getId());
+
+                    isConnected = false;
+                    Glide.with(context).load(R.drawable.loading).into(ivtest);
+                    (connecting).setText(" connecting...");
+                }
+            });
+        }
+    }
 
 }
 

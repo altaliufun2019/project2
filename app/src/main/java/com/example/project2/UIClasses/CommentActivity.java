@@ -6,8 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.project2.Constants.Constants;
+import com.example.project2.MainActivity;
 import com.example.project2.Managers.Comment;
 import com.example.project2.Managers.MessageController;
 import com.example.project2.Managers.Post;
@@ -22,6 +26,7 @@ public class CommentActivity extends AppCompatActivity {
     private static Context applicationContext = null;
     private CommentAdapter mAdapter;
     private RecyclerView rvData;
+    private MainActivity.ConnectionMonitor monitor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +34,12 @@ public class CommentActivity extends AppCompatActivity {
         applicationContext = getApplicationContext();
 
         setContentView(R.layout.activity_comment);
+        // starting toolbar
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
+        this.monitor = new MainActivity.ConnectionMonitor(this, (ImageView) findViewById(R.id.ivtest), (TextView) findViewById(R.id.connecting));
+
 
         initializeRecyclerView();
 
@@ -36,6 +47,7 @@ public class CommentActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
+        this.monitor.disable();
         super.onDestroy();
     }
 

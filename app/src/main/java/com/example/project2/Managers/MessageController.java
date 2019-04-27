@@ -25,11 +25,11 @@ public class MessageController {
     private MessageController() {}
 
     public void getPosts() {
-        if (!isInternetAvailable()) {
-            StorageManager.INSTANCE.load_posts();
-        } else {
+//        if (!isInternetAvailable()) {
+//            StorageManager.INSTANCE.load_posts();
+//        } else {
             ConnectionManager.getInstance().getPosts();
-        }
+//        }
     }
 
     public void getComments(int id) {
