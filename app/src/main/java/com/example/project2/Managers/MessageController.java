@@ -14,6 +14,7 @@ public class MessageController {
     private static final MessageController ourInstance = new MessageController();
     private static final int recentlyTime = 5 * 60;
     static final int POSTS = -1;
+    public int current_postID = -1;
     public ArrayList<Post> posts = new ArrayList<>();
     public ArrayList<Comment> comments = new ArrayList<>();
 
@@ -25,11 +26,11 @@ public class MessageController {
     private MessageController() {}
 
     public void getPosts() {
-//        if (!isInternetAvailable()) {
-//            StorageManager.INSTANCE.load_posts();
-//        } else {
+        if (!isInternetAvailable()) {
+            StorageManager.INSTANCE.load_posts();
+        } else {
             ConnectionManager.getInstance().getPosts();
-//        }
+        }
     }
 
     public void getComments(int id) {

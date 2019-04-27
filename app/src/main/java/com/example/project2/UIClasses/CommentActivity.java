@@ -1,5 +1,6 @@
 package com.example.project2.UIClasses;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ public class CommentActivity extends AppCompatActivity {
     private RecyclerView rvData;
     private MainActivity.ConnectionMonitor monitor;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,9 @@ public class CommentActivity extends AppCompatActivity {
 
         initializeRecyclerView();
 
+
         ((TextView)findViewById(R.id.comment_detail))
-                .setText("Post " + MessageController.getInstance().comments.get(0).getPostid()
+                .setText("Post " + MessageController.getInstance().current_postID
                         + ", " + MessageController.getInstance().comments.size() + " comments");
 
     }

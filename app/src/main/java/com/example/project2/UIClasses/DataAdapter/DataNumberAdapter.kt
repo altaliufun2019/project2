@@ -28,7 +28,7 @@ class DataNumberAdapter(var mData: List<Post>) : RecyclerView.Adapter<DataNumber
         override fun onClick(v: View?) {
             var pos = layoutPosition
 
-            println("$pos $post_id")
+            MessageController.getInstance().current_postID = post_id
             MessageController.getInstance().getComments(post_id)
         }
     }

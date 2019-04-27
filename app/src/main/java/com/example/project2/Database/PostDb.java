@@ -4,16 +4,18 @@ import com.orm.SugarRecord;
 
 public class PostDb extends SugarRecord<PostDb> {
     public int userid;
-    public int ID;
+    public int postid;
     public String title;
     public String body;
 
     public PostDb() {
+        super();
     }
 
-    public PostDb(int userid, int id, String title, String body) {
+    public PostDb(int userid, int postid, String title, String body) {
+        super();
         this.userid = userid;
-        this.ID = id;
+        this.postid = postid;
         this.title = title;
         this.body = body;
     }

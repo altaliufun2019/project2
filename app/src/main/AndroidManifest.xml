@@ -28,5 +28,7 @@
         </activity>
 
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example" />
+        <meta-data android:name="DATABASE" android:value="sugar_example.db" />
+        <meta-data android:name="VERSION" android:value="1" />
     </application>
 </manifest>
