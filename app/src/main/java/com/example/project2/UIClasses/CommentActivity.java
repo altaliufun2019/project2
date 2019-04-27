@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,8 +43,11 @@ public class CommentActivity extends AppCompatActivity {
 
         this.monitor = new MainActivity.ConnectionMonitor(this, (ImageView) findViewById(R.id.ivtest), (TextView) findViewById(R.id.connecting));
 
-
         initializeRecyclerView();
+
+        ((TextView)findViewById(R.id.comment_detail))
+                .setText("Post " + MessageController.getInstance().comments.get(0).getPostid()
+                        + ", " + MessageController.getInstance().comments.size() + " comments");
 
     }
 
@@ -51,6 +57,19 @@ public class CommentActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
+    }
     // initializing and creating recycler view
     private void initializeRecyclerView(){
         rvData = findViewById(R.id.comment_view);
