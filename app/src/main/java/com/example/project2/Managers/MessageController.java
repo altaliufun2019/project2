@@ -7,11 +7,16 @@ import android.net.NetworkInfo;
 
 import com.example.project2.MainActivity;
 
+import java.util.ArrayList;
+
 
 public class MessageController {
     private static final MessageController ourInstance = new MessageController();
     private static final int recentlyTime = 5 * 60;
     static final int POSTS = -1;
+    public ArrayList<Post> posts = new ArrayList<>();
+    public ArrayList<Comment> comments = new ArrayList<>();
+
 
     public static MessageController getInstance() {
         return ourInstance;
@@ -28,12 +33,12 @@ public class MessageController {
     }
 
     public void getComments(int id) {
-        if (!isInternetAvailable() || isRecentlyUpdated(id)){
-            StorageManager.INSTANCE.load(id);
-        }
-        else{
+//        if (!isInternetAvailable() || isRecentlyUpdated(id)){
+//            StorageManager.INSTANCE.load(id);
+//        }
+//        else{
             ConnectionManager.getInstance().getComments(id);
-        }
+//        }
     }
 
     private boolean isInternetAvailable() {

@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".UIClasses.CommentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
 
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example" />
     </application>

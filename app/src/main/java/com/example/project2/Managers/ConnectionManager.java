@@ -16,6 +16,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.project2.MainActivity;
 import com.example.project2.MessageCenter.DispatchQueue;
+import com.example.project2.MessageCenter.NotificationCenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,19 +43,19 @@ public class ConnectionManager {
     }
 
     public void getPosts() {
-        final List<Post> posts = new ArrayList<>(100);
         requestQueue.add(new JsonArrayRequest(postAddress, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                final List<Post> posts = new ArrayList<>(100);
+                final List<Post> posts = new ArrayList<>();
                 System.out.println(response);
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject json = response.getJSONObject(i);
-                        posts.add(new Post(json.getInt("userId"), json.getInt("ID"),
+                        posts.add(new Post(json.getInt("userId"), json.getInt("id"),
                                 json.getString("title"), json.getString("body")));
 
                     } catch (JSONException e) {
+                        e.printStackTrace();
                         Log.e("json parsing", "post out of range");
                     }
                 }
@@ -62,6 +63,7 @@ public class ConnectionManager {
                     @Override
                     public void run() {
                         StorageManager.INSTANCE.save(posts);
+                        NotificationCenter.INSTANCE.posts_loaded(posts);
                     }
                 });
 
@@ -79,7 +81,7 @@ public class ConnectionManager {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject json = response.getJSONObject(i);
-                        comments.add(new Comment(json.getInt("postId"), json.getInt("ID"),
+                        comments.add(new Comment(json.getInt("postId"), json.getInt("id"),
                                 json.getString("name"), json.getString("email"),
                                 json.getString("body")));
                     }
@@ -91,6 +93,7 @@ public class ConnectionManager {
                     @Override
                     public void run() {
                         StorageManager.INSTANCE.save(comments, id);
+                        NotificationCenter.INSTANCE.comments_loaded(comments);
                     }
                 });
             }

@@ -2,20 +2,24 @@ package com.example.project2.MessageCenter
 
 import android.util.SparseArray
 import com.example.project2.Constants.Constants
-import java.util.ArrayList
+import com.example.project2.Managers.Comment
+import com.example.project2.Managers.Post
 
 
 object NotificationCenter{
     private val observers = SparseArray<MutableList<Any>>()
     private val allowedTasks = mutableListOf<Int>()
-    val DATA_LOADING = Constants.Tasks.FETCH_DATA
+    val POST_LOADING = Constants.Tasks.LOAD_POST
+    val COMMENT_LOADING = Constants.Tasks.LOAD_COMMENT
 
     init {
-        allowedTasks.add(Constants.Tasks.FETCH_DATA)
+        allowedTasks.add(Constants.Tasks.LOAD_POST)
+        allowedTasks.add(Constants.Tasks.LOAD_COMMENT)
     }
 
     interface NotificationTarget {
-        fun notified(taskID: Int)
+        fun notifiedPosts(taskID: Int, posts: MutableList<Post>)
+        fun notifiedComments(taskID: Int, comments: MutableList<Comment>)
     }
 
     fun addTask(taskID: Int): Boolean? {
@@ -24,10 +28,17 @@ object NotificationCenter{
         return false
     }
 
-    fun data_loaded() {
-        val taskID = NotificationCenter.DATA_LOADING
+    fun posts_loaded(posts: MutableList<Post>) {
+        val taskID = NotificationCenter.POST_LOADING
         for (observer in observers.get(taskID)) {
-            (observer as NotificationTarget).notified(taskID)
+            (observer as NotificationTarget).notifiedPosts(taskID, posts)
+        }
+    }
+
+    fun comments_loaded(comments: MutableList<Comment>) {
+        val taskID = NotificationCenter.COMMENT_LOADING
+        for (observer in observers.get(taskID)) {
+            (observer as NotificationTarget).notifiedComments(taskID, comments)
         }
     }
 

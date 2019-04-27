@@ -3,6 +3,7 @@ package com.example.project2.Managers
 import android.os.Handler
 import com.example.project2.Database.*
 import com.example.project2.MessageCenter.DispatchQueue
+import com.example.project2.MessageCenter.NotificationCenter
 import com.orm.query.Condition
 import com.orm.query.Select
 import java.lang.Exception
@@ -43,6 +44,7 @@ object StorageManager {
                     println("problem in saving comments in database")
                 }
             }
+            println("successfully added comments to database")
         })
     }
 
@@ -55,9 +57,9 @@ object StorageManager {
             }catch (e: Exception){
                 println("could not load comments from database")
             }
-            (Handler()).post({
-
-            })
+            (Handler()).post {
+                NotificationCenter.comments_loaded(cmnts)
+            }
         })
     }
 

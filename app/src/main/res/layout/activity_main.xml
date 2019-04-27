@@ -8,18 +8,68 @@
         tools:context=".MainActivity" android:orientation="vertical">
 
 
-    <fragment android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:name="com.example.project2.UIClasses.fragments.ActionPane"
-              android:id="@+id/action_pane">
-    </fragment>
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-    <android.support.v7.widget.ActionBarContainer android:layout_width="match_parent"
-                                                  android:layout_height="match_parent"
-    android:id="@+id/cont">
-        <!--<fragment android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:name="com.example.test.fragments.ListFragment
-                  android:ID="@+ID/items">
-        </fragment>
--->
-    </android.support.v7.widget.ActionBarContainer>
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/main_toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary">-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivtest"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_gravity="end"-->
+                    <!--android:contentDescription="connecting" />-->
+            <!--</FrameLayout>-->
+            <!--<TextView-->
+                <!--android:id="@+id/connecting"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=" connecting..."/>-->
+
+        <!--</android.support.v7.widget.Toolbar>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+
+    <!--<fragment android:layout_width="match_parent" android:layout_height="wrap_content"-->
+              <!--android:name="com.example.project2.UIClasses.fragments.ActionPane"-->
+              <!--android:id="@+id/action_pane">-->
+    <!--</fragment>-->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/btn3"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:text="333"
+            tools:ignore="ButtonStyle" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/numList"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        />
+
+
+
+
+
+
 </LinearLayout>
