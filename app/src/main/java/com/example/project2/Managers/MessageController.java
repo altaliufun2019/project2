@@ -33,12 +33,12 @@ public class MessageController {
     }
 
     public void getComments(int id) {
-//        if (!isInternetAvailable() || isRecentlyUpdated(id)){
-//            StorageManager.INSTANCE.load(id);
-//        }
-//        else{
+        if (!isInternetAvailable() || isRecentlyUpdated(id)){
+            StorageManager.INSTANCE.load(id);
+        }
+        else{
             ConnectionManager.getInstance().getComments(id);
-//        }
+        }
     }
 
     private boolean isInternetAvailable() {

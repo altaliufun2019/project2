@@ -52,8 +52,8 @@ object StorageManager {
         mQueue.post(Runnable {
             val cmnts = mutableListOf<Comment>()
             try {
-                val comments = Select.from(CommentDb::class.java).where(Condition.prop("postId").eq(postId)).list()
-                comments.forEach { it -> cmnts.add(Comment(it.postId, it.getID(), it.name, it.email, it.body)) }
+                val comments = Select.from(CommentDb::class.java).where(Condition.prop("post_Id").eq(postId)).list()
+                comments.forEach { it -> cmnts.add(Comment(it.postId, it.ID, it.name, it.email, it.body)) }
             }catch (e: Exception){
                 println("could not load comments from database")
             }
